@@ -11,6 +11,7 @@ class Transkeluar extends Model
 
     protected $fillable=[
         'katkeluar_id',
+        'users_id',
         'nama',
         'jumlah',
         'tanggal'
@@ -19,5 +20,9 @@ class Transkeluar extends Model
     public function katkeluar()
     {
         return $this->belongsTo(KatKeluar::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

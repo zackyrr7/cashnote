@@ -9,13 +9,19 @@ class Katmasuk extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nama'
+        'nama',
+        'user_id'
     ];
 
     public function transmasuks()
     {
         return $this->hasMany(Transmasuk::class, 'katmasuks_id', 'id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
 
 
 }

@@ -9,11 +9,16 @@ class Katkeluar extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nama'
+        'nama',
+        'user_id'
     ];
 
     public function transkeluars()
     {
         return $this->hasMany(Transkeluar::class, 'katkeluars_id', 'id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

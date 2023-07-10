@@ -11,6 +11,7 @@ class Transmasuk extends Model
 
     protected $fillable=[
         'katmasuk_id',
+        'users_id',
         'nama',
         'jumlah',
         'tanggal'
@@ -20,4 +21,10 @@ class Transmasuk extends Model
     {
         return $this->belongsTo(Katmasuk::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
 }

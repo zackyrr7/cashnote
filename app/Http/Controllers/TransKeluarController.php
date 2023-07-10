@@ -6,14 +6,30 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\katkeluar;
 use App\Models\Transkeluar;
+use App\Models\User;
 
 class TranskeluarController extends Controller
 {
-    public function index($id)
+    public function indexkategori($id)
     {
         try {
             $kategori = katkeluar::find($id);
         return $transaksi = Transkeluar::where('katkeluars_id', $id)->get();
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 201,
+                'message' => 'Server Error!'
+            ]);
+        }
+
+        
+    }
+
+    public function indexuser($id)
+    {
+        try {
+            $user = User::find($id);
+        return $transaksi = Transkeluar::where('users_id', $id)->get();
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 201,
@@ -32,8 +48,9 @@ class TranskeluarController extends Controller
     {
         try {
             $transaksi = katkeluar::findOrFail($request->id);
-
+            
             $transaksi = new Transkeluar();
+            $transaksi -> users_id = $request->users_id;
             $transaksi -> katkeluars_id = $request->id;
             $transaksi -> nama = $request->nama;
             $transaksi-> jumlah = $request->jumlah;

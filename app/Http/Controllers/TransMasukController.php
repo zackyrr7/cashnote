@@ -6,14 +6,30 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Katmasuk;
 use App\Models\Transmasuk;
+use App\Models\User;
 
 class TransMasukController extends Controller
 {
-    public function index($id)
+    public function indexkategori($id)
     {
         try {
-            $kategori = Katmasuk::find($id);
+            $kategori = Katmasuk::findOrFail($id);
         return $transaksi = Transmasuk::where('katmasuks_id', $id)->get();
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 201,
+                'message' => 'Server Error!'
+            ]);
+        }
+
+        
+    }
+
+    public function indexuser($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+        return $transaksi = Transmasuk::where('users_id', $id)->get();
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 201,
@@ -31,9 +47,10 @@ class TransMasukController extends Controller
     public function store(Request $request)
     {
         try {
-            $transaksi = Katmasuk::findOrFail($request->id);
-
+            $transaksi = katmasuk::findOrFail($request->id);
+            
             $transaksi = new Transmasuk();
+            $transaksi -> users_id = $request->users_id;
             $transaksi -> katmasuks_id = $request->id;
             $transaksi -> nama = $request->nama;
             $transaksi-> jumlah = $request->jumlah;
